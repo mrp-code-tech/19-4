@@ -1,0 +1,37 @@
+name: Terraform Validate
+
+on:
+  push:
+    branches:
+      - "branch-*"   # runs on ALL branches
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+
+      - name: Terraform Init (no backend)
+        run: terraform init -backend=false
+
+      - name: Terraform Format Check
+        run: terraform fmt -check -recursive
+
+      - name: Terraform Validate
+        run: terraform validate
+
+      # ---- Linting ----
+      - name: Setup TFLint
+        uses: terraform-linters/setup-tflint@v4
+
+      - name: Run TFLint
+        run: tflint --recursive
+
+      # ---- Security ----
+      - name: Run tfsec
+        uses: aquasecurity/tfsec-action@v1.0.3

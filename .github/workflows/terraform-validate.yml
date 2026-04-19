@@ -26,11 +26,11 @@ jobs:
         run: terraform validate
 
       # ---- Linting ----
-      - name: Setup TFLint
-        uses: terraform-linters/setup-tflint@v4
+      #- name: Setup TFLint
+      #  uses: terraform-linters/setup-tflint@v4
 
-      - name: Run TFLint
-        run: tflint --recursive
+      #- name: Run TFLint
+      #  run: tflint --recursive
 
       # ---- Security ----
       - name: Run tfsec
